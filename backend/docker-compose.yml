@@ -1,0 +1,27 @@
+services:
+  flask:
+    build: .
+    container_name: flask-backend
+    ports:
+      - "5000:5000"  # Mapeia a porta 5000 do container para a porta 5000 da máquina
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://user:password@db:5432/mydatabase  # URL de conexão com o banco
+    depends_on:
+      - db
+    volumes:
+      - .:/app  # Mapeia a pasta local para dentro do container
+
+  db:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistir dados do banco
+
+volumes:
+  postgres_data:
+    driver: local
