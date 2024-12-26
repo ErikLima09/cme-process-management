@@ -14,7 +14,7 @@ class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     type = db.Column(db.String(100), nullable=False)
-    validade = db.Column(db.Date, nullable=False)
+    validate = db.Column(db.Date, nullable=False)
     serial = db.Column(db.String(100), unique=True, nullable=False)
 
 class Process(db.Model):
