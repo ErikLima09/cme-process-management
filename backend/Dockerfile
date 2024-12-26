@@ -2,7 +2,7 @@
 FROM python:3.10-slim
 
 # Definir diretório de trabalho no container
-WORKDIR /app
+WORKDIR /backend/app
 
 # Copiar os arquivos de dependências
 COPY requirements.txt requirements.txt

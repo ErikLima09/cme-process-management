@@ -1,10 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+
 import os
 
-# Inicializando a variável db com SQLAlchemy
-db = SQLAlchemy
-
+db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
@@ -20,8 +19,13 @@ def create_app():
 
     db.init_app(app)
 
-    # Importando e registrando as rotas
-    from .routes import main
-    app.register_blueprint(main)
+    with app.app_context():
+        from . import models, routes
+        db.create_all() #Cria as tabelas no banco
 
     return app
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(debug=True)
