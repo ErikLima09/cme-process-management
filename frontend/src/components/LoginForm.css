@@ -1,0 +1,198 @@
+/* Container principal */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Formulário */
+.login-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-button, .create-user-button, .register-button, .close-modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.create-user-button {
+    background-color: #28a745;
+    color: white;
+    margin-top: 10px;
+}
+
+.register-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.close-modal-button {
+    background-color: #dc3545;
+    color: white;
+    margin-top: 10px;
+}
+
+/* Mensagem de erro */
+.error-text {
+    color: red;
+    font-size: 14px;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+    margin-bottom: 16px;
+}
+
+.modal button {
+    margin-right: 10px;
+}
+
+
+/* MODAL CRIAR USUÁRIO */
+
+/* Fundo do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Janela do modal */
+.modal {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    animation: scaleIn 0.3s ease-in-out;
+    position: relative;
+}
+
+/* Animação de escala ao abrir */
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Título do modal */
+.modal h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+}
+
+/* Inputs no modal */
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #f9f9f9;
+}
+
+/* Botões no modal */
+.register-button, .close-modal-button {
+    width: calc(50% - 10px);
+    padding: 10px;
+    margin: 10px 5px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.register-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
+
+.close-modal-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.close-modal-button:hover {
+    background-color: #a71d2a;
+}
+
+/* Estilo para o botão fechar (X) */
+.close-modal-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-modal-icon:hover {
+    color: #333;
+}

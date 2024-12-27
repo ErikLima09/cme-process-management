@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from .models import User, Material, Process, Failure, db
+from werkzeug.security import check_password_hash, generate_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -31,10 +32,13 @@ def get_user(id):
 @api.route('/users', methods=['POST'])
 def create_user():
     data = request.json
+
+    hashed_password = generate_password_hash(data['password'])
+
     new_user = User(
         username=data['username'],
         email=data['email'],
-        password=data['password'],
+        password=hashed_password,
         role=data['role']
     )
     db.session.add(new_user)
@@ -159,3 +163,32 @@ def create_failure():
     db.session.add(new_failure)
     db.session.commit()
     return jsonify({"message": "Failure recorded successfully"}), 201
+
+
+# - - - Login - - - #
+
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password:
+        return jsonify({"message": "Email e senha são obrigatórios"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if user and check_password_hash(user.password, password): # Valida a senha criptografada
+        # Retorna os dados do usuário, não incluindo a senha
+        print("Login bem-sucedido")
+        return jsonify({
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            }
+        }), 200
+    else:
+        print("Credenciais inválidas")
+        return jsonify({"message": "Credenciais inválidas"}), 401

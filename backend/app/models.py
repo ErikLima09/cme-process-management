@@ -9,6 +9,9 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(50), nullable=False)
 
+    def __repr__(self):
+        return f'<User {self.username}>'
+
 class Material(db.Model):
     __tablename__ = 'materials'
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +19,10 @@ class Material(db.Model):
     type = db.Column(db.String(100), nullable=False)
     validate = db.Column(db.Date, nullable=False)
     serial = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"<Material {self.name}>"
+    
 
 class Process(db.Model):
     __tablename__ = 'processes'
@@ -29,6 +36,9 @@ class Process(db.Model):
     material = db.relationship('Material', backref='processes')
     user = db.relationship('User', backref='processes')
 
+    def __repr__(self):
+        return f"<Process {self.step} - {self.status}>"
+
 class Failure(db.Model):
     __tablename__ = 'failures'
     id = db.Column(db.Integer, primary_key=True)
@@ -39,4 +49,6 @@ class Failure(db.Model):
     material = db.relationship('Material', backref='failures')
 
     def __repr__(self):
-        return f"<Material {self.name}>"
+        return f"<Failure {self.description[:30]}... at {self.timestamp}>"
+
+    

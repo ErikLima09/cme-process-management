@@ -1,11 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import os
 
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
+
+    CORS(app)
 
     # Configurações do banco de dados
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
