@@ -1,4 +1,4 @@
-# Docker Compose Setup for Backend, Frontend, and Database
+# Configuração do Docker Compose para backend, frontend e banco de dados
 
 Este projeto está configurado para usar o Docker Compose para gerenciar um aplicativo full-stack com os seguintes serviços:
 
