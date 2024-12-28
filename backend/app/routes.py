@@ -74,13 +74,13 @@ def get_materials():
             "id": m.id,
             "name": m.name,
             "type": m.type,
-            "validate": m.validate.strftime('%Y-%m-%d'),
-            "serial": m.serial
+            "expiration_date": m.expiration_date.strftime('%Y-%m-%d'),
+            "serial": m.serial,
+            "status": m.status
         }
         for m in materials
     ]
     return jsonify(result), 200
-
 
 @api.route('/materials/<int:id>', methods=['GET'])
 def get_material(id):
@@ -89,16 +89,31 @@ def get_material(id):
     if not material:
         return jsonify({"error": f"Material with ID {id} not found"}), 404
     
-    return jsonify({"id": material.id, "name": material.name, "type": material.type, "validate": material.validate.strftime('%Y-%m-%d'), "serial": material.serial}), 200
+    return jsonify({"id": material.id, "name": material.name, "type": material.type, "expiration_date": material.expiration_date.strftime('%Y-%m-%d'), "serial": material.serial, "status": material.status}), 200
 
 @api.route('/materials', methods=['POST'])
 def create_material():
     data = request.json
+
+    prefix = data.get('type', 'GEN').upper()[:3]  # Usa as 3 primeiras letras do tipo ou 'GEN' como padrão
+
+    # Recupera o último material com o mesmo prefixo para gerar o próximo serial
+    last_material = Material.query.filter(Material.serial.like(f"{prefix}%")).order_by(Material.id.desc()).first()
+
+    # Gera o próximo número do serial
+    next_id = 1
+    if last_material:
+        # Extrai a parte numérica do serial e incrementa
+        last_serial_number = int(last_material.serial[len(prefix):])
+        next_id = last_serial_number + 1
+    
+    serial = f"{prefix}{str(next_id).zfill(3)}"  # Ex: CON001, TEC002, etc.
+
     new_material = Material(
         name=data['name'],
         type=data['type'],
-        validate=data['validate'],
-        serial=f"{data['name']}-{data['type']}-{len(Material.query.all()) + 1}"
+        expiration_date=data['expiration_date'],
+        serial=serial
     )
     db.session.add(new_material)
     db.session.commit()
@@ -110,7 +125,7 @@ def update_material(id):
     data = request.json
     material.name = data.get('name', material.name)
     material.type = data.get('type', material.type)
-    material.validate = data.get('validate', material.validate)
+    material.expiration_date = data.get('expiration_date', material.expiration_date)
     db.session.commit()
     return jsonify({"message": "Material updated successfully"}), 200
 
@@ -124,19 +139,6 @@ def delete_material(id):
 
 # - - - CRUD de Processos - - - #
 
-@api.route('/processes', methods=['POST'])
-def create_process():
-    data = request.json
-    new_process = Process(
-        step=data['step'],
-        status=data['status'],
-        material_id=data['material_id'],
-        user_id=data['user_id']
-    )
-    db.session.add(new_process)
-    db.session.commit()
-    return jsonify({"message": "Process created successfully"}), 201
-
 @api.route('/processes/<int:material_id>', methods=['GET'])
 def get_processes(material_id):
     processes = Process.query.filter_by(material_id=material_id).all()
@@ -146,12 +148,45 @@ def get_processes(material_id):
             "step": p.step,
             "timestamp": p.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
             "status": p.status,
-            "material_id": p.material_id,
-            "user_id": p.user_id
+            "material_id": p.material_id
         }
         for p in processes
     ]
     return jsonify(result), 200
+
+
+
+@api.route('/processes/serial/<string:serial>', methods=['GET'])
+def get_processes_reports(serial):
+
+    # Consulta que retorna o processo a partir do serial do material
+    processes = db.session.query(Process).join(Material).filter(Material.serial == serial).all()
+
+    result = [
+        {
+            "id": p.id,
+            "step": p.step,
+            "timestamp": p.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            "status": p.status,
+            "material_id": p.material_id
+        }
+        for p in processes
+    ]
+    return jsonify(result), 200
+
+@api.route('/processes', methods=['POST'])
+def create_process():
+    data = request.json
+    new_process = Process(
+        step=data['step'],
+        status=data['status'],
+        material_id=data['material_id']
+    )
+    db.session.add(new_process)
+    db.session.commit()
+    return jsonify({"message": "Process created successfully"}), 201
+
+# - - - Failure - - - #
 
 @api.route('/failures', methods=['POST'])
 def create_failure():

@@ -17,8 +17,9 @@ class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     type = db.Column(db.String(100), nullable=False)
-    validate = db.Column(db.Date, nullable=False)
+    expiration_date = db.Column(db.Date, nullable=False)
     serial = db.Column(db.String(100), unique=True, nullable=False)
+    status = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Material {self.name}>"
@@ -31,11 +32,9 @@ class Process(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
     status = db.Column(db.String(50), nullable=False)  # Sucesso, Falha
     material_id = db.Column(db.Integer, db.ForeignKey('materials.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     material = db.relationship('Material', backref='processes')
-    user = db.relationship('User', backref='processes')
-
+    
     def __repr__(self):
         return f"<Process {self.step} - {self.status}>"
 

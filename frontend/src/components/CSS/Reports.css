@@ -1,0 +1,91 @@
+.report-page-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .report-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .search-section-reports {
+    margin-bottom: 20px;
+  }
+  
+  .search-section-reports label {
+    font-size: 18px;
+  }
+  
+  .search-section-reports input {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .tracking-details-reports {
+    margin-top: 20px;
+  }
+  
+  .tracking-table-reports {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .tracking-table-reports th,
+  .tracking-table-reports td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .tracking-table-reports th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .tracking-table-reports tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .button-reports {
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-top: 20px;
+  }
+  
+  .button-reports:hover {
+    background-color: #45a049;
+  }
+  
+  .sidebar-reports {
+    width: 200px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+  }
+  
+  .sidebar-reports ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-reports li {
+    margin: 15px 0;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #34495e;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .sidebar-reports li:hover {
+    background-color: #1abc9c;
+  }
+  

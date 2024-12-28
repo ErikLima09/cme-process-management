@@ -1,40 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router'; // Para navegação de páginas
-import './MainPage.css';
+import { useNavigate } from 'react-router-dom'; // Para navegação de páginas
+import './CSS/MainPage.css';
 
 const MainPage = () => {
     const navigate = useNavigate(); // Usado para redirecionar para outras páginas
 
-    // Função para navegar para a página de cadastro de materiais
-    const handleRegisterMaterial = () => {
-        navigate('/cadastro-material'); // Redireciona para a página de cadastro
-    };
-
-    // Função para navegar para a página de rastreamento de material
-    const handleTrackMaterial = () => {
-        navigate('/rastrear-material'); // Redireciona para a página de rastreamento
-    };
-
-    // Função para navegar para a página de relatórios
-    const handleGenerateReport = () => {
-        navigate('/relatorios'); // Redireciona para a página de relatórios
+    // Funções de navegação
+    const handleNavigate = (path) => {
+        navigate(path); // Redireciona para o caminho especificado
     };
 
     return (
-        <div className="main-container">
-            <h1>Bem-vindo ao Sistema de Gerenciamento</h1>
+        <div className="main-layout">
+            <aside className="sidebar">
+                <h2>Menu</h2>
+                <ul className="sidebar-menu">
+                    <li onClick={() => handleNavigate('/materials')}>Materiais</li>
+                    <li onClick={() => handleNavigate('/track-materials')}>Rastrear Material</li>
+                    <li onClick={() => handleNavigate('/reports')}>Emitir Relatórios</li>
+                </ul>
+            </aside>
 
-            <div className="button-container">
-                <button onClick={handleRegisterMaterial} className="main-button">
-                    Cadastro de Materiais
-                </button>
-                <button onClick={handleTrackMaterial} className="main-button">
-                    Rastrear Material
-                </button>
-                <button onClick={handleGenerateReport} className="main-button">
-                    Emitir Relatórios
-                </button>
-            </div>
+            {/* Conteúdo Principal */}
+            <main className="main-content">
+                <h1>Bem-vindo ao Sistema de CME</h1>
+                <p>Use o menu lateral para navegar pelas funcionalidades do sistema.</p>
+            </main>
         </div>
     );
 };

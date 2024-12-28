@@ -1,6 +1,4 @@
 body {
-  /*background-color: #424242;*/
-
     &::after {
       content: '';
       position: absolute;

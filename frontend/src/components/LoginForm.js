@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useStore from '../store/useStore';
 import { useNavigate } from 'react-router';
-import './LoginForm.css';
+import './CSS/LoginForm.css';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -47,12 +47,7 @@ const LoginForm = () => {
         const role = document.getElementById("register-role").value;
         const email = document.getElementById("register-email").value;
         const password = document.getElementById("register-password").value;
-
-        console.log(username);
-        console.log(role);
-        console.log(email);
-        console.log(password)
-
+        
         try {            
             const response = await fetch('http://localhost:5000/api/users', {
                 method: 'POST',
