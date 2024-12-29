@@ -52,3 +52,9 @@ Execute o seguinte comando para compilar e iniciar todos os serviços:
 
 ```bash
 docker-compose up --build
+```
+
+### Start the system:
+
+```bash
+http://localhost:3000/
