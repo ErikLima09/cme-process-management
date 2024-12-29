@@ -108,14 +108,17 @@ def create_material():
         next_id = last_serial_number + 1
     
     serial = f"{prefix}{str(next_id).zfill(3)}"  # Ex: CON001, TEC002, etc.
-
+    
     new_material = Material(
         name=data['name'],
         type=data['type'],
         expiration_date=data['expiration_date'],
-        serial=serial
+        serial=serial,
+        status = ''
     )
+    
     db.session.add(new_material)
+    # return jsonify({"message": "teste", "data": data, "new_material": serial}), 201
     db.session.commit()
     return jsonify({"message": "Material created successfully"}), 201
 

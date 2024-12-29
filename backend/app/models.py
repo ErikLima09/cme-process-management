@@ -30,9 +30,8 @@ class Process(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     step = db.Column(db.String(100), nullable=False)  # Recebimento, Lavagem, etc.
     timestamp = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    status = db.Column(db.String(50), nullable=False)  # Sucesso, Falha
+    status = db.Column(db.String(50), nullable=True)  # Sucesso, Falha
     material_id = db.Column(db.Integer, db.ForeignKey('materials.id'), nullable=False)
-
     material = db.relationship('Material', backref='processes')
     
     def __repr__(self):

@@ -2,7 +2,7 @@
 FROM node:16
 
 # Defina o diretório de trabalho
-WORKDIR /app
+WORKDIR /frontend/app
 
 # Copie os arquivos do frontend
 COPY package*.json ./
